@@ -16,6 +16,7 @@ then
 DBDriver=odbc.ddr
 DBServer=NetXMS
 DBName=${ODBC_DB_NAME}
+DBPassword=${ODBC_DB_PASS}
 Logfile=${netxmsd_log_file}
 DataDirectory=${netxmsd_data_directory}
 ${NETXMSD_CONFIG}
@@ -32,8 +33,6 @@ Driver = ODBC Driver 17 for SQL Server
 Server = tcp:${ODBC_SQL_SERVER},1433
 Database = ${ODBC_DB_NAME}
 User = ${ODBC_DB_USER}
-Password = ${ODBC_DB_PASS}
-Trusted_Connection=yes
 EOL
 
 #fi
