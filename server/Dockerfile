@@ -3,7 +3,7 @@
 FROM debian:stretch 
 MAINTAINER Marcus Halmsjö <duragizer@gmail.com>
 
-ARG NETXMS_VERSION_SERVER=3.8.366-1
+ARG NETXMS_VERSION_SERVER=3.8.382-1
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update && \
@@ -32,7 +32,7 @@ RUN curl -sL http://packages.netxms.org/netxms.gpg | apt-key add - && \
 	curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update && \
     apt-get -y install libssl1.1 libzmq5 && \
-    apt-get -y install netxms-server=$NETXMS_VERSION_SERVER netxms-dbdrv-odbc=$NETXMS_VERSION_SERVER && \
+    apt-get -y install netxms-server=$NETXMS_VERSION_SERVER netxms-dbdrv-odbc=$NETXMS_VERSION_SERVER netxms-base=$NETXMS_VERSION_SERVER && \
 	echo msodbcsql17 msodbcsql/ACCEPT_EULA boolean true | debconf-set-selections && \
 	apt-get -y install msodbcsql17 libgssapi-krb5-2 && \
     apt-get clean && \
