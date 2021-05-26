@@ -33,6 +33,7 @@ Server = tcp:${ODBC_SQL_SERVER},1433
 Database = ${ODBC_DB_NAME}
 User = ${ODBC_DB_USER}
 Password = ${ODBC_DB_PASS}
+Trusted_Connection=yes
 EOL
 
 #fi
