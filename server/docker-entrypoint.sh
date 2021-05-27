@@ -3,7 +3,7 @@
 if [ ! -e "/data/.initialized" ];
 then
 	echo "Generating NetXMS server config file /etc/netxmsd.conf"
-	echo -e "Logfile=/data/netxms.log\nDBDriver=odbc.ddr\n" >/etc/netxmsd.conf
+	echo -e "Logfile=/data/netxms.log\nDBDriver=odbc.ddr\nDBServer=NetXMS\n" >/etc/netxmsd.conf
 	echo "$NETXMS_CONFIG" >> /etc/netxmsd.conf
 
 	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\ncommand=/usr/bin/netxmsd -q\n" >/etc/supervisor/conf.d/supervisord.conf
