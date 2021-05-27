@@ -23,7 +23,7 @@ EXPOSE 4701
 
 ENV NETXMS_UNLOCKONSTARTUP=1 NETXMS_STARTAGENT=1 NXAGENT_REGISTERSERVER=127.0.0.1
 
-COPY server/docker-entrypoint.sh server/nxagent.sh /
+COPY /docker-entrypoint.sh /nxagent.sh /
 
 RUN  chmod 755 /docker-entrypoint.sh /nxagent.sh
 
