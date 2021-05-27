@@ -6,7 +6,7 @@ then
 	echo -e "Logfile=/data/netxms.log\nDBDriver=odbc.ddr\nDBServer=NetXMS\nDBName=${ODBC_DB_NAME}\n" >/etc/netxmsd.conf
 	echo "$NETXMS_CONFIG" >> /etc/netxmsd.conf
 
-	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\nstdout_logfile=/data/netxms.log\nstdout_logfile_maxbytes=0\ncommand=/usr/bin/netxmsd -q\n" >/etc/supervisor/conf.d/supervisord.conf
+	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\ncommand=/usr/bin/netxmsd -q\n" >/etc/supervisor/conf.d/supervisord.conf
 
 	[ "$NETXMS_STARTAGENT" -gt 0 ] && echo -e "[program:netxms-nxagent]\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\ncommand=/nxagent.sh\n" >>/etc/supervisor/conf.d/supervisord.conf
 
