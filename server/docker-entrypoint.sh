@@ -1,20 +1,20 @@
 #!/bin/bash
 
-if [ ! -e "/data/.initialized" ];
+if [ ! -e "/etc/.initialized" ];
 then
 	echo "Generating NetXMS server config file /etc/netxmsd.conf"
 	echo -e "Logfile=/data/netxms.log\nDBDriver=odbc.ddr\nDBServer=NetXMS\nDBName=${ODBC_DB_NAME}\n" >/etc/netxmsd.conf
 	echo "$NETXMS_CONFIG" >> /etc/netxmsd.conf
 
-	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\ncommand=/usr/bin/netxmsd -q\n" >/etc/supervisor/conf.d/supervisord.conf
+	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\ncommand=/usr/bin/netxmsd -q\n" >/etc/supervisor/conf.d/supervisord.conf
 
-	[ "$NETXMS_STARTAGENT" -gt 0 ] && echo -e "[program:netxms-nxagent]\ncommand=/nxagent.sh\n" >>/etc/supervisor/conf.d/supervisord.conf
+	[ "$NETXMS_STARTAGENT" -gt 0 ] && echo -e "[program:netxms-nxagent]\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\ncommand=/nxagent.sh\n" >>/etc/supervisor/conf.d/supervisord.conf
 
-	touch /data/.initialized
+	touch /etc/.initialized
 fi
 
 # ODBC DSN
-echo "Generating ODBC config file ${odbc_ini}"
+echo "Generating ODBC config file /etc/odbc.ini"
 cat > /etc/odbc.ini <<EOL
 [NetXMS]
 Driver = ODBC Driver 17 for SQL Server
@@ -32,4 +32,3 @@ then
 fi
 
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
