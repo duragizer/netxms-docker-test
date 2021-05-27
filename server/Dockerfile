@@ -14,7 +14,8 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
 	curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
 	curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-	ACCEPT_EULA=Y apt-get update && apt-get -y install msodbcsql17 libgssapi-krb5-2
+	echo msodbcsql17 msodbcsql/ACCEPT_EULA boolean true | debconf-set-selections && \
+	apt-get update && apt-get -y install msodbcsql17 libgssapi-krb5-2
 
 VOLUME /data
 
