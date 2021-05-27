@@ -8,7 +8,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     apt-get update && apt-get -y install curl apt-transport-https gnupg && \
     curl -sL http://packages.netxms.org/netxms.gpg | apt-key add - && \
     echo "deb http://packages.netxms.org/debian/ buster main" > /etc/apt/sources.list.d/netxms.list && \
-    apt-get update && apt-get -y install netxms-base="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-server="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-agent="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-dbdrv-sqlite3="${MAJOR_VERSION}.${MINOR_VERSION}-1" supervisor && apt-get clean
+    apt-get update && apt-get -y install netxms-base="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-server="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-agent="${MAJOR_VERSION}.${MINOR_VERSION}-1" netxms-dbdrv-odbc="${MAJOR_VERSION}.${MINOR_VERSION}-1" supervisor && apt-get clean
 
 # Microsoft ODBC Driver and Kerberos
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
@@ -23,7 +23,7 @@ EXPOSE 4701
 
 ENV NETXMS_UNLOCKONSTARTUP=1 NETXMS_STARTAGENT=1 NXAGENT_REGISTERSERVER=127.0.0.1
 
-COPY /docker-entrypoint.sh /nxagent.sh /
+COPY ./docker-entrypoint.sh ./nxagent.sh /
 
 RUN  chmod 755 /docker-entrypoint.sh /nxagent.sh
 
