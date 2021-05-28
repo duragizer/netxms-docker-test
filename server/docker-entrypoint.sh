@@ -3,7 +3,7 @@
 if [ ! -e "/etc/.initialized" ];
 then
 	echo "Generating NetXMS server config file /etc/netxmsd.conf"
-	echo -e "Logfile=/data/netxms.log\nDBDriver=odbc.ddr\nDBServer=NetXMS\nDBName=${ODBC_DB_NAME}\n" >/etc/netxmsd.conf
+	echo -e "Logfile=/data/netxms.log\nDataDirectory=/data/netxms\nDBDriver=odbc.ddr\nDBServer=NetXMS\nDBName=${ODBC_DB_NAME}\n" >/etc/netxmsd.conf
 	echo "$NETXMS_CONFIG" >> /etc/netxmsd.conf
 
 	echo -e "[supervisord]\nnodaemon=true\n[program:netxms-server]\ncommand=/usr/bin/netxmsd -q\n[program:netxms-server-log]\ncommand=tail -f /data/netxms.log\nstdout_logfile=/dev/stdout\nstdout_logfile_maxbytes=0\n" >/etc/supervisor/conf.d/supervisord.conf
@@ -11,6 +11,10 @@ then
 	[ "$NETXMS_STARTAGENT" -gt 0 ] && echo -e "[program:netxms-nxagent]\ncommand=/nxagent.sh\n" >>/etc/supervisor/conf.d/supervisord.conf
 
 	touch /etc/.initialized
+fi
+
+if [ ! -d "/data/netxms" ]; then
+    cp -ar /var/lib/netxms/ /data/netxms
 fi
 
 # ODBC DSN
